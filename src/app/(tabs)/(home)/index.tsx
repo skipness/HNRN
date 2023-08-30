@@ -2,18 +2,17 @@ import {
   faBook,
   faBriefcase,
   faFire,
-  faLink,
   faQuestion,
   faVolumeHigh,
 } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
-import { Link, Stack } from "expo-router";
+import { Stack } from "expo-router";
 import { useRef, useState } from "react";
 import type { ListRenderItemInfo } from "react-native";
 import { FlatList, InteractionManager } from "react-native";
-import { ListItem, Separator } from "tamagui";
-import { Dropdown } from "../../../components/dropdown";
+import { Separator } from "tamagui";
 import type { DropdownProps } from "../../../components/dropdown";
+import { Dropdown } from "../../../components/dropdown";
+import ListItem from "../../../components/listItem";
 import { useGetListQuery } from "../../../services/hackerNews";
 import type { HitItem, SearchRequest } from "../../../types/search";
 
@@ -57,23 +56,17 @@ export default function HackerNews() {
   };
 
   const renderItem = ({
-    item: { author, objectID, title, url },
+    item: { created_at, num_comments, objectID, points, title, url },
   }: ListRenderItemInfo<HitItem>) => {
     return (
-      <Link
-        href={{
-          pathname: "/item/[itemId]",
-          params: { itemId: objectID },
-        }}
-        asChild
-      >
-        <ListItem
-          pressStyle={{ backgroundColor: "$backgroundPress" }}
-          subTitle={author}
-          title={title}
-          iconAfter={url && <FontAwesomeIcon icon={faLink} />}
-        />
-      </Link>
+      <ListItem
+        created_at={created_at}
+        num_comments={num_comments}
+        objectID={objectID}
+        points={points}
+        title={title}
+        url={url}
+      />
     );
   };
 
