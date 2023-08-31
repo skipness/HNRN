@@ -30,7 +30,7 @@ export default function HackerNews() {
   const [item, setItem] = useState(items.at(0));
   const [page, setPage] = useState(0);
   const listRef = useRef<FlatList<HitItem>>(undefined);
-  const { data, isFetching, isLoading, isSuccess } = useGetListQuery({
+  const { data, isFetching, isLoading, isSuccess, refetch } = useGetListQuery({
     tags: item.value,
     type: "search_by_date",
     page,
@@ -53,6 +53,13 @@ export default function HackerNews() {
   const onEndReached = () => {
     if (isFetching || isLoading) return;
     setPage((page) => (page += 1));
+  };
+
+  const onRefresh = () => {
+    // Query will not be called if page is zero because the
+    // all query arguments didn't change. We will use refetch to
+    // force the query fetch again.
+    page === 0 ? refetch() : setPage(0);
   };
 
   const renderItem = ({
@@ -90,7 +97,9 @@ export default function HackerNews() {
           ItemSeparatorComponent={() => <Separator />}
           renderItem={renderItem}
           ref={listRef}
+          refreshing={isFetching}
           onEndReached={onEndReached}
+          onRefresh={onRefresh}
         />
       )}
     </>
