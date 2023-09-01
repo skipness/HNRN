@@ -56,8 +56,8 @@ export default function HackerNews() {
   };
 
   const onRefresh = () => {
-    // Query will not be called if page is zero because the
-    // all query arguments didn't change. We will use refetch to
+    // Query will not be called if page is zero because all
+    // query arguments didn't change. We will use refetch to
     // force the query fetch again.
     page === 0 ? refetch() : setPage(0);
   };
