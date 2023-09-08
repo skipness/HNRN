@@ -1,50 +1,50 @@
-import { RenderHTMLSource } from "react-native-render-html";
-import { Accordion, YStack, Label, Stack, XStack } from "tamagui";
-import type { Item } from "../types/item";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
+import { useState } from "react";
+import { RenderHTMLSource } from "react-native-render-html";
+import { Button, Label, XGroup, XStack, YStack } from "tamagui";
+import type { Comment as Reply } from "../types/item";
+import { CollapsableContainer } from "./collapsableContainer";
+import { ChevronLast } from "@tamagui/lucide-icons";
+import { useWindowDimensions } from "react-native";
 
 interface CommentProps {
-  item: Item;
-  type: "parent" | "child";
+  item: Reply;
 }
 
 export default function Comment({
-  item: { author, children, created_at_i, id, text },
-  type,
+  item: { author, children, created_at_i, parent_id, story_id, text },
 }: CommentProps) {
+  const isChild = parent_id !== story_id;
+  const [expanded, setExpanded] = useState(true);
+  const { width } = useWindowDimensions();
+
   return (
-    <Accordion type="multiple" collapsable defaultValue={[id.toString()]}>
-      <Accordion.Item
-        borderLeftColor={type === "child" && "$orange10Dark"}
-        borderLeftWidth={type === "child" && "$1.5"}
-        paddingLeft={type === "child" && "$2"}
-        value={id.toString()}
+    author &&
+    text && (
+      <YStack
+        blc="lightgrey"
+        blw={isChild && "$0.75"}
+        paddingHorizontal={isChild && "$2.5"}
+        paddingVertical={!isChild && "$3"}
+        mt={isChild && "$2"}
+        rowGap="$2.5"
       >
-        <Accordion.Trigger
-          padding="$0"
-          flexDirection="row"
-          justifyContent="space-between"
-          unstyled
+        <XStack
+          ai="center"
+          columnGap="$1.5"
+          onPress={() => setExpanded((expanded) => !expanded)}
         >
-          {({ open }) => (
-            <>
-              <XStack columnGap="$1.5">
-                <Label>{author}</Label>
-                <Label>{"\u00b7"}</Label>
-                <Label>{formatDistanceToNow(created_at_i * 1e3)}</Label>
-              </XStack>
-              <Label>{open ? "[-]" : "[+]"}</Label>
-            </>
-          )}
-        </Accordion.Trigger>
-        <Accordion.Content unstyled padding="$0">
-          <RenderHTMLSource contentWidth={320} source={{ html: text }} />
-          {children.length > 0 &&
-            children.map((item) => (
-              <Comment key={item.id} item={item} type="child" />
-            ))}
-        </Accordion.Content>
-      </Accordion.Item>
-    </Accordion>
+          <Label lh={0}>{author}</Label>
+          <Label lh={0}>{"\u00b7"}</Label>
+          <Label lh={0}>{formatDistanceToNow(created_at_i * 1e3)}</Label>
+        </XStack>
+        <CollapsableContainer expanded={expanded}>
+          <RenderHTMLSource contentWidth={width} source={{ html: text }} />
+          {children.map((child) => (
+            <Comment item={child} key={child.id} />
+          ))}
+        </CollapsableContainer>
+      </YStack>
+    )
   );
 }

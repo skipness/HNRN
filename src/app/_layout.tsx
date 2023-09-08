@@ -54,7 +54,10 @@ export default function RootLayout() {
                     name="(tabs)"
                     options={{ headerShown: false }}
                   />
-                  <Stack.Screen name="item/[itemId]" options={{ title: "" }} />
+                  <Stack.Screen
+                    name="item/[itemId]"
+                    options={{ headerShown: false }}
+                  />
                 </Stack>
               </RenderHTMLConfigProvider>
             </TRenderEngineProvider>
