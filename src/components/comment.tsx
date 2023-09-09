@@ -24,8 +24,8 @@ export default function Comment({
       <YStack
         blc="lightgrey"
         blw={isChild && "$0.75"}
-        paddingHorizontal={isChild && "$2.5"}
         paddingVertical={!isChild && "$3"}
+        pl={isChild && "$2.5"}
         mt={isChild && "$2"}
         rowGap="$2.5"
       >
