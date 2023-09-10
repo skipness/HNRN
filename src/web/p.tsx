@@ -1,8 +1,8 @@
-import type { CustomTextualRenderer } from "react-native-render-html";
+import type { CustomBlockRenderer } from "react-native-render-html";
 import { getNativePropsForTNode } from "react-native-render-html";
-import { Paragraph } from "tamagui";
+import { SizableText } from "tamagui";
 
-export const PRenderer: CustomTextualRenderer = function PRenderer(props) {
+export const PRenderer: CustomBlockRenderer = function PRenderer(props) {
   const { children } = getNativePropsForTNode(props);
-  return <Paragraph userSelect="none">{children}</Paragraph>;
+  return <SizableText>{children}</SizableText>;
 };
