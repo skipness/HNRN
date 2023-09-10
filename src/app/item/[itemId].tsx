@@ -16,6 +16,7 @@ import {
 import {
   Button,
   H3,
+  H5,
   Label,
   Paragraph,
   Separator,
@@ -42,7 +43,7 @@ export default function Item() {
 
   const header = (
     <YStack rowGap="$2">
-      <H3>{data?.title}</H3>
+      <H5 fontWeight="bold">{data?.title}</H5>
       <XGroup
         ai="center"
         f={1}
