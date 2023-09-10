@@ -25,7 +25,8 @@ export default function RootLayout() {
   const colorScheme = useColorScheme();
 
   const [loaded] = useFonts({
-    Inter: require("@tamagui/font-inter/otf/Inter-Medium.otf"),
+    Inter: require("@tamagui/font-inter/otf/Inter-Regular.otf"),
+    InterItalic: require("@tamagui/font-inter/otf/Inter-Italic.otf"),
     InterBold: require("@tamagui/font-inter/otf/Inter-Bold.otf"),
   });
 
@@ -54,7 +55,10 @@ export default function RootLayout() {
                     name="(tabs)"
                     options={{ headerShown: false }}
                   />
-                  <Stack.Screen name="item/[itemId]" options={{ title: "" }} />
+                  <Stack.Screen
+                    name="item/[itemId]"
+                    options={{ headerShown: false }}
+                  />
                 </Stack>
               </RenderHTMLConfigProvider>
             </TRenderEngineProvider>
