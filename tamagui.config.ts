@@ -5,8 +5,12 @@ import { themes, tokens } from "@tamagui/themes";
 import { createInterFont } from "@tamagui/font-inter";
 import { createAnimations } from "@tamagui/animations-moti";
 
-const headingFont = createInterFont();
-const bodyFont = createInterFont();
+const interFont = createInterFont({
+  face: {
+    300: { normal: "Inter", italic: "InterItalic" },
+    bold: { normal: "InterBold" },
+  },
+});
 
 const animations = createAnimations({
   lazy: {
@@ -22,8 +26,8 @@ const config = createTamagui({
   themeClassNameOnRoot: false,
   shorthands,
   fonts: {
-    heading: headingFont,
-    body: bodyFont,
+    heading: interFont,
+    body: interFont,
   },
   themes,
   tokens,
