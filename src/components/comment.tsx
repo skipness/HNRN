@@ -32,6 +32,7 @@ export default function Comment({
         <XStack
           ai="center"
           columnGap="$1.5"
+          theme="alt2"
           onPress={() => setExpanded((expanded) => !expanded)}
         >
           <Label lh={0}>{author}</Label>
